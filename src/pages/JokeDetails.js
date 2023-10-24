@@ -1,5 +1,19 @@
+import { Fragment } from 'react';
+import { useParams, Route } from 'react-router-dom';
+import Comments from '../components/comments/Comments';
+
 const JokeDetails = () => {
-  return <h1>Joke Details Page</h1>;
+  const params = useParams();
+  return (
+    <Fragment>
+      <h1>Joke Details Page {params.jokeId}</h1>
+
+      {/* <Route path={`jokes/${params.jokeId}/comments`}></Route> */}
+      <Route path='/jokes/:jokeId/comments'>
+        <Comments />
+      </Route>
+    </Fragment>
+  );
 };
 
 export default JokeDetails;
