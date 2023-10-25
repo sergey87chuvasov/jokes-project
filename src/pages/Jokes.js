@@ -1,5 +1,20 @@
+import JokeList from '../components/jokes/JokeList';
+
+const DUMMY_JOKES = [
+  {
+    id: 'j1',
+    topic: 'programming',
+    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur qui ipsa quaerat?',
+  },
+  {
+    id: 'j2',
+    topic: 'general',
+    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur qui ipsa quaerat?',
+  },
+];
+
 const Jokes = () => {
-  return <h1>Jokes Page</h1>;
+  return <JokeList jokes={DUMMY_JOKES} />;
 };
 
 export default Jokes;
