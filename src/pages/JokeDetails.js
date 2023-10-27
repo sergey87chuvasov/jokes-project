@@ -12,7 +12,7 @@ const DUMMY_JOKES = [
   {
     id: 'j2',
     topic: 'general',
-    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur qui ipsa quaerat?',
+    text: 'Gorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur qui ipsa quaerat?',
   },
 ];
 
