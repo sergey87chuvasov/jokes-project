@@ -31,7 +31,7 @@ const JokeDetails = () => {
       {/* <Route path={`/jokes/${params.jokeId}`} exact> */}
       <Route path={`${routeMatch.path}`} exact>
         <div className='centered'>
-          <Link className='btn--empty' to={`/jokes/${routeMatch.url}/comments`}>
+          <Link className='btn--empty' to={`${routeMatch.url}/comments`}>
             Show Comments
           </Link>
         </div>
