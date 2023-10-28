@@ -7,7 +7,7 @@ import styles from './JokeList.module.css';
 const sortJokes = (jokes, isAscending) => {
   return jokes.sort((joke1, joke2) => {
     if (isAscending) {
-      return joke1.id > joke2.id ? 1 : 1;
+      return joke1.id > joke2.id ? 1 : -1;
     } else {
       return joke1.id < joke2.id ? 1 : -1;
     }
@@ -26,7 +26,16 @@ const JokeList = (props) => {
   const sortedJokes = sortJokes(props.jokes, isSortingAscending);
 
   const toggleSortingHandler = () => {
-    history.push('/jokes?sort=' + (isSortingAscending ? 'desc' : 'asc'));
+    // history.push('/jokes?sort=' + (isSortingAscending ? 'desc' : 'asc'));
+
+    history.push({
+      pathname: location.pathname,
+      search: `sort=${isSortingAscending ? 'desc' : 'asc'}`,
+    });
+
+    // history.push(
+    //   `${location.pathname}?sort=${isSortingAscending ? 'desc' : 'asc'}`
+    // );
   };
 
   return (
@@ -37,7 +46,7 @@ const JokeList = (props) => {
         </button>
       </div>
       <ul className={styles.list}>
-        {props.jokes.map((joke) => (
+        {sortedJokes.map((joke) => (
           <JokeItem
             key={joke.id}
             id={joke.id}

@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { useParams, Route, Link } from 'react-router-dom';
+import { useParams, Route, Link, useRouteMatch } from 'react-router-dom';
 import Comments from '../components/comments/Comments';
 import HighlightedJoke from '../components/jokes/HighlightedJoke';
 
@@ -17,6 +17,7 @@ const DUMMY_JOKES = [
 ];
 
 const JokeDetails = () => {
+  const routeMatch = useRouteMatch();
   const params = useParams();
   const joke = DUMMY_JOKES.find((joke) => joke.id === params.jokeId);
 
@@ -27,14 +28,16 @@ const JokeDetails = () => {
   return (
     <Fragment>
       <HighlightedJoke text={joke.text} topic={joke.topic} />
-      <Route path={`/jokes/${params.jokeId}`} exact>
+      {/* <Route path={`/jokes/${params.jokeId}`} exact> */}
+      <Route path={`${routeMatch.path}`} exact>
         <div className='centered'>
-          <Link className='btn--empty' to={`/jokes/${params.jokeId}/comments`}>
+          <Link className='btn--empty' to={`/jokes/${routeMatch.url}/comments`}>
             Show Comments
           </Link>
         </div>
       </Route>
-      <Route path={`/jokes/${params.jokeId}/comments`}>
+      {/* <Route path={`/jokes/${params.jokeId}/comments`}> */}
+      <Route path={`${routeMatch.path}/comments`}>
         <Comments />
       </Route>
     </Fragment>
