@@ -22,15 +22,19 @@ const NewCommentForm = (props) => {
 
     const enteredText = commentTextRef.current.value;
 
-    sendHttpRequest({ commentData: enteredText, jokeId: props.jokeId });
+    sendHttpRequest({
+      commentData: { text: enteredText },
+      jokeId: props.jokeId,
+    });
   };
 
   return (
     <form className={styles.form} onSubmit={submitFormHandler}>
-      {status === 'pending'} &&{' '}
-      <div className='centered'>
-        <Loader />
-      </div>
+      {status === 'pending' && (
+        <div className='centered'>
+          <Loader />
+        </div>
+      )}
       <div className={styles.control} onSubmit={submitFormHandler}>
         <label htmlFor='comment'>Your Comment</label>
         <textarea id='comment' rows='5' ref={commentTextRef}></textarea>

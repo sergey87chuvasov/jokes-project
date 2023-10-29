@@ -1,16 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 
 import styles from './Comments.module.css';
 import NewCommentForm from './NewCommentForm';
 import useHttp from '../../hooks/use-http';
 import { getComments } from '../../utils/firebase-api';
+import Loader from '../UI/Loader';
+import CommentsList from './CommentsList';
 
 const Comments = () => {
   const [isAddingComment, setIsAddingComment] = useState(false);
   const params = useParams();
 
-  const { jokeId } = params();
+  const { jokeId } = params;
 
   const {
     sendHttpRequest,
@@ -26,7 +28,30 @@ const Comments = () => {
     sendHttpRequest(jokeId);
   }, [jokeId, sendHttpRequest]);
 
-  const commentAddedHandler = () => {};
+  const commentAddedHandler = useCallback(() => {
+    sendHttpRequest(jokeId);
+  }, [jokeId, sendHttpRequest]);
+
+  let comments;
+
+  if (status === 'pending') {
+    comments = (
+      <div className='centered'>
+        <Loader />
+      </div>
+    );
+  }
+
+  if (status === 'completed' && loadedComments && loadedComments.length > 0) {
+    comments = <CommentsList comments={loadedComments} />;
+  }
+
+  if (
+    status === 'completed' &&
+    (!loadedComments || loadedComments.length === 0)
+  ) {
+    comments = <p className='centered'>У этой шутки нет комментариев</p>;
+  }
 
   return (
     <section className={styles.comments}>
@@ -42,7 +67,8 @@ const Comments = () => {
           onCommentAdded={commentAddedHandler}
         />
       )}
-      <p>Comments...</p>
+      {/* <p>Comments...</p> */}
+      {comments}
     </section>
   );
 };
