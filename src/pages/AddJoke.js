@@ -1,16 +1,29 @@
 import JokeForm from '../components/jokes/JokeForm';
 import { useHistory } from 'react-router-dom';
+import useHttp from '../hooks/use-http';
+import { addJoke } from '../utils/firebase-api';
+import { useEffect } from 'react';
 
 const AddJoke = () => {
   const history = useHistory();
+  const { sendHttpRequest, status } = useHttp(addJoke);
+
+  useEffect(() => {
+    if (status === 'completed') {
+      history.push('/joke-list');
+    }
+  }, [status, history]);
 
   const addJokeHandler = (jokeData) => {
-    console.log(jokeData);
+    // console.log(jokeData);
+    sendHttpRequest(jokeData);
 
-    history.push('/joke-list');
+    // history.push('/joke-list');
   };
 
-  return <JokeForm onAddJoke={addJokeHandler} />;
+  return (
+    <JokeForm isLoading={status === 'pending'} onAddJoke={addJokeHandler} />
+  );
 };
 
 export default AddJoke;
